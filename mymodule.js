@@ -1,16 +1,23 @@
+// these requires don't need to be in module exports
 let fs = require('fs')
-let ext = process.argv[3]
-let directory = fs.readdir(process.argv[2])
+let path = require('path')
 
-let filterList = (err, data) => {
-  if (err) {
-    return err
-  }
-  else {
-    let newData = data.filter((el) => {
-      if (el.includes(`.${extension}`)) {
-        console.log(el)
-      }
-    })
-  }
+module.exports = function readdir(dir, ext, callback)
+{
+  let full_ext = "." + ext
+
+  // async read files
+  fs.readdir(dir, function(err, list) {
+    // handle the fails
+    if (err) {
+      return callback(err, null)
+    }
+
+    // filter the file list
+    let filtered = list.filter((file) => path.extname(file) === full_ext)
+
+    // call the callback
+    callback(null, filtered)
+
+  })
 }

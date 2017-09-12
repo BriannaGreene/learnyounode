@@ -43,3 +43,22 @@
 // fs.readdir(process.argv[2], callback)
 
 // MAKE IT MODULAR
+let filter_dir = require('./mymodule')
+dir = process.argv[2]
+ext = process.argv[3]
+
+filter_dir(dir, ext, function(err, files) {
+  for (file of files) {
+    console.log(file)
+  }
+})
+
+// HTTP CLIENT
+// let http = require('http')
+// let url = process.argv[2]
+//
+// http.get(url, (response) => {
+//   response.on('data', (data) => {
+//     console.log(data.toString())
+//   })
+// })
